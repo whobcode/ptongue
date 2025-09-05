@@ -18,11 +18,15 @@ Parseltongue is a powerful browser extension for text conversion and real-time t
 
 ## Features
 
-- **Text Conversion**: Convert text to/from leetspeak, binary, base64, ROT13, and more.
+- **Text Conversion**: Convert text to/from leetspeak, binary, base64, pig latin, scramble, emoji, and more.
 - **Tokenization Visualization**: Real-time token visualization with colored tokens.
 - **User Interface**: Easy access via popup and context menu integration.
 
 **ROADMAP (To-Do)**: glitch token library, prompt library (system prompts + 'harmful' prompts for testing), language translation, text reversal, special characters + unicode, emojispeak, word order scrambling, prompt enhancer/mutator, image mutator (adds noise) 
+
+## Documentation
+
+The source code is fully documented using JSDoc. Developers can generate documentation using a tool like `typedoc`.
 
 ## Installation
 
@@ -126,6 +130,41 @@ We welcome contributions! Follow these steps to set up your development environm
 ## Running a Temporary Extension
 
 To test the extension without permanently installing it, follow the loading instructions under "Load the Extension" for Chrome or Firefox.
+
+## Deployment
+
+The `dist` directory can be deployed as a static site to services like Cloudflare Pages or Netlify. This can be useful for demonstrating the popup and side panel UIs.
+
+### Deploying to Cloudflare Pages via the Dashboard
+
+1.  Push the code to a GitHub or GitLab repository.
+2.  Log in to the Cloudflare dashboard and navigate to **Workers & Pages**.
+3.  Click on **Create application** and select the **Pages** tab.
+4.  Connect your Git repository.
+5.  In the build settings, select the following:
+    -   **Framework preset**: `None`
+    -   **Build command**: `npm run build`
+    -   **Build output directory**: `dist`
+6.  Click **Save and Deploy**.
+
+### Deploying to Cloudflare Pages via Wrangler
+
+1.  Install the Wrangler CLI:
+    ```bash
+    npm install -g wrangler
+    ```
+2.  Log in to Wrangler:
+    ```bash
+    wrangler login
+    ```
+3.  Run the build command:
+    ```bash
+    npm run build
+    ```
+4.  Deploy the site:
+    ```bash
+    wrangler pages deploy dist
+    ```
 
 ## License
 

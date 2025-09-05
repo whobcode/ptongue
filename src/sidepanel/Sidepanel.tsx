@@ -23,6 +23,12 @@ import {
   tiktokenModels,
 } from "../types";
 
+/**
+ * Checks if a value is a valid TiktokenModel.
+ *
+ * @param {any} value - The value to check.
+ * @returns {value is TiktokenModel} True if the value is a valid TiktokenModel, false otherwise.
+ */
 function isTiktokenModel(value: any): value is TiktokenModel {
   const models: TiktokenModel[] = [
     "davinci-002",
@@ -85,6 +91,15 @@ function isTiktokenModel(value: any): value is TiktokenModel {
   return models.includes(value);
 }
 
+/**
+ * A textarea component with a copy button.
+ *
+ * @param {object} props - The component's props.
+ * @param {string} props.id - The ID of the textarea element.
+ * @param {string} props.value - The value of the textarea.
+ * @param {string} props.placeholder - The placeholder text for the textarea.
+ * @returns {JSX.Element} The rendered textarea with a copy button.
+ */
 const TextAreaWithCopyButton = ({
   id,
   value,
@@ -96,6 +111,10 @@ const TextAreaWithCopyButton = ({
 }) => {
   const [copied, setCopied] = useState(false);
 
+  /**
+   * Handles the copy button click event.
+   * Copies the content of the textarea to the clipboard.
+   */
   const handleCopy = () => {
     const element = document.getElementById(id);
     if (element instanceof HTMLTextAreaElement) {
@@ -128,18 +147,42 @@ const TextAreaWithCopyButton = ({
   );
 };
 
+/**
+ * Checks if a setting is a ToggleSetting.
+ *
+ * @param {Setting} setting - The setting to check.
+ * @returns {setting is ToggleSetting} True if the setting is a ToggleSetting, false otherwise.
+ */
 function isToggleSetting(setting: Setting): setting is ToggleSetting {
   return setting.type === "toggle";
 }
 
-function isDropdownSetting(setting: Setting): setting is ToggleSetting {
+/**
+ * Checks if a setting is a DropdownSetting.
+ *
+ * @param {Setting} setting - The setting to check.
+ * @returns {setting is DropdownSetting} True if the setting is a DropdownSetting, false otherwise.
+ */
+function isDropdownSetting(setting: Setting): setting is DropdownSetting {
   return setting.type === "dropdown";
 }
 
+/**
+ * Checks if a setting is a GroupSetting.
+ *
+ * @param {Setting} setting - The setting to check.
+ * @returns {setting is GroupSetting} True if the setting is a GroupSetting, false otherwise.
+ */
 function isGroupSetting(setting: Setting): setting is GroupSetting {
   return setting.type === "group";
 }
 
+/**
+ * The main component for the side panel UI.
+ * It displays various text conversions and tokenizations based on user settings.
+ *
+ * @returns {JSX.Element} The rendered side panel component.
+ */
 export default function SidePanel() {
   const [tokenizedText, setTokenizedText] = useState<JSX.Element[] | null>(
     null
@@ -255,6 +298,13 @@ export default function SidePanel() {
     setTokenizedText(promptToTokens(atob(base64Text), encoder));
   }, [encoder, base64Text]);
 
+  /**
+   * Converts a string of text into a series of token components.
+   *
+   * @param {string} text - The text to tokenize.
+   * @param {Tiktoken} encoder - The tiktoken encoder to use.
+   * @returns {JSX.Element[]} An array of JSX elements representing the tokens.
+   */
   const promptToTokens = (text: string, encoder: Tiktoken) => {
     const colors = [
       "bg-red-200",
