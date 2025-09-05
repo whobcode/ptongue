@@ -8,7 +8,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: {
         index: path.resolve("./src/popup/index.tsx"),
-        sidepanel : path.resolve("./src/sidepanel/index.tsx")
+        sidepanel : path.resolve("./src/sidepanel/index.tsx"),
+        background: path.resolve("./src/background.ts"),
+        "content-script": path.resolve("./src/content-script.ts"),
     },
     output: {
       path: path.join(__dirname, "dist"),
