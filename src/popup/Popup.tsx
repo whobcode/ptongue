@@ -13,18 +13,34 @@ import logo from "../assets/logo.png";
 
 import { AppState, DropdownSetting, GroupSetting, initialState, Setting, ToggleSetting } from "../types";
 
+/**
+ * @interface RenderSettingProps
+ * @property {Setting} setting - The setting object to render.
+ * @property {string[]} path - The path to the setting in the state.
+ */
 interface RenderSettingProps {
   setting: Setting;
   path: string[];
 }
 
+/**
+ * @interface RenderSettingItemProps
+ * @property {string} settingKey - The key of the setting.
+ * @property {Setting} setting - The setting object to render.
+ * @property {string[]} path - The path to the setting in the state.
+ */
 interface RenderSettingItemProps {
   settingKey: string;
   setting: Setting;
   path: string[];
 }
 
-
+/**
+ * The main component for the browser extension's popup.
+ * It manages the extension's state and provides a UI for activation and settings.
+ *
+ * @returns {JSX.Element} The rendered popup component.
+ */
 function Popup() {
   const Images: string[] = [hf, openAI, anthopic];
   const [state, setState] = useState<AppState>(initialState);
@@ -93,6 +109,9 @@ function Popup() {
     fetchStoredState();
   }, []);
   
+  /**
+   * Toggles the active state of the extension.
+   */
   const handleActive = () => {
     setState(prevState => {
       const newIsActive = !prevState.isActive;
@@ -103,6 +122,12 @@ function Popup() {
     });
   };
   
+  /**
+   * Updates a setting in the state and stores it in the browser's sync storage.
+   *
+   * @param {string[]} path - The path to the setting in the state.
+   * @param {boolean | string} newValue - The new value for the setting.
+   */
   const updateSetting = (path: string[], newValue: boolean | string) => {
     setState(prevState => {
       const newState = { ...prevState };
@@ -127,18 +152,27 @@ function Popup() {
       browser.storage.sync.set({ [storageKey]: newValue })
         .then(() => console.log(`Setting ${storageKey} updated successfully`))
         .catch(err => console.error(`Failed to update setting ${storageKey}:`, err));
-      console.log(newState)
       return newState;
     });
   };
   
+  /**
+   * @interface ToggleSwitchProps
+   * @property {boolean} checked - Whether the switch is checked.
+   * @property {(checked: boolean) => void} onChange - The function to call when the switch state changes.
+   */
   interface ToggleSwitchProps {
     checked: boolean;
     onChange: (checked: boolean) => void;
   }
   
+  /**
+   * A toggle switch component.
+   *
+   * @param {ToggleSwitchProps} props - The component's props.
+   * @returns {JSX.Element} The rendered toggle switch.
+   */
   const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onChange }) => {
-    console.log(checked)
     return (
       <label className="relative inline-flex items-center cursor-pointer text-sm">
         <input
@@ -161,10 +195,15 @@ function Popup() {
     );
   };
   
+  /**
+   * Renders a setting based on its type.
+   *
+   * @param {RenderSettingProps} props - The component's props.
+   * @returns {JSX.Element} The rendered setting component.
+   */
   const RenderSetting: React.FC<RenderSettingProps> = ({ setting, path }) => {
     switch (setting.type) {
       case 'toggle':
-        console.log(path)
         return (
           <ToggleSwitch
             checked={setting.value}
@@ -199,6 +238,12 @@ function Popup() {
     }
   };
   
+  /**
+   * Renders a single setting item in the settings menu.
+   *
+   * @param {RenderSettingItemProps} props - The component's props.
+   * @returns {JSX.Element} The rendered setting item.
+   */
   const RenderSettingItem: React.FC<RenderSettingItemProps> = ({ settingKey, setting, path }) => (
     <li className="flex items-center justify-between pb-1 border-b-[0.5px]">
       <span className="text-black text-md">{setting.description}:</span>
@@ -206,6 +251,11 @@ function Popup() {
     </li>
   );
   
+  /**
+   * Renders the settings menu.
+   *
+   * @returns {JSX.Element} The rendered settings menu.
+   */
   const SettingsMenu: React.FC = () => {
     const { settings } = state;  // Assuming state is accessible here
   

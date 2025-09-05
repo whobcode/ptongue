@@ -1,3 +1,7 @@
+/**
+ * @type LeetDictionary
+ * @description A dictionary for leetspeak conversions.
+ */
 type LeetDictionary = {
     [key: string]: string;
 };
@@ -10,18 +14,23 @@ const PUNCTUATION = [".", ",", ";", ":", "!", "?", "'", "\"", "-", "—", "(", "
  *
  * This class stores entries in a Map<K, V>, with methods
  * to get, set, and delete entries.
+ * @template K
+ * @template V
  */
 class KeyValueCache<K, V> {
     private store: Map<K, V>;
   
+    /**
+     * Creates a new KeyValueCache.
+     */
     constructor() {
       this.store = new Map<K, V>();
     }
   
     /**
      * Stores a value in the cache.
-     * @param key   The key under which to store the value.
-     * @param value The value to be stored.
+     * @param {K} key - The key under which to store the value.
+     * @param {V} value - The value to be stored.
      */
     public set(key: K, value: V): void {
       this.store.set(key, value);
@@ -29,8 +38,8 @@ class KeyValueCache<K, V> {
   
     /**
      * Retrieves a value from the cache.
-     * @param key The key of the value to retrieve.
-     * @returns   The value, or undefined if no entry is found.
+     * @param {K} key - The key of the value to retrieve.
+     * @returns {V | undefined} The value, or undefined if no entry is found.
      */
     public get(key: K): V | undefined {
       return this.store.get(key);
@@ -38,8 +47,8 @@ class KeyValueCache<K, V> {
   
     /**
      * Returns whether the cache contains an entry for the key.
-     * @param key The key to check.
-     * @returns   A boolean indicating if the key exists in the cache.
+     * @param {K} key - The key to check.
+     * @returns {boolean} A boolean indicating if the key exists in the cache.
      */
     public has(key: K): boolean {
       return this.store.has(key);
@@ -47,8 +56,8 @@ class KeyValueCache<K, V> {
   
     /**
      * Removes an entry from the cache.
-     * @param key The key to remove.
-     * @returns   A boolean indicating whether the key was deleted.
+     * @param {K} key - The key to remove.
+     * @returns {boolean} A boolean indicating whether the key was deleted.
      */
     public delete(key: K): boolean {
       return this.store.delete(key);
@@ -63,12 +72,19 @@ class KeyValueCache<K, V> {
   
     /**
      * Returns the number of items in the cache.
+     * @returns {number} The number of items in the cache.
      */
     public size(): number {
       return this.store.size;
     }
 }
 
+/**
+ * Removes punctuation from a word.
+ *
+ * @param {string} word - The word to remove punctuation from.
+ * @returns {string} The word without punctuation.
+ */
 function removePunctation(word: string): string {
     let result = "";
     for (const char of word) {
@@ -77,6 +93,12 @@ function removePunctation(word: string): string {
     return result;
 }
 
+/**
+ * Extracts the suffix punctuation from a word.
+ *
+ * @param {string} word - The word to extract punctuation from.
+ * @returns {[string, string]} A tuple containing the word without suffix punctuation and the punctuation itself.
+ */
 function extractSuffixPunctation(word: string): [string, string] {
     return PUNCTUATION.includes(word[word.length - 1])
     ? [word.slice(0, -1), word[word.length - 1]]
@@ -192,6 +214,10 @@ export function toBase64(text: string): string {
     return btoa(text);
 }
 
+/**
+ * @type EmojiDictionary
+ * @description A dictionary for emoji conversions.
+ */
 type EmojiDictionary = {
     [key: string]: string[];
 };
@@ -219,6 +245,7 @@ const squareEmojis: EmojiDictionary = {
  * 
  * @param {T[]} arr - The array to sample from.
  * @returns {T} A random item from the array.
+ * @template T
  */
 function getRandomItem<T>(arr: T[]): T {
     const randomIndex = Math.floor(Math.random() * arr.length);

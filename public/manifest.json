@@ -32,7 +32,8 @@
     "sidePanel",
     "tabs",
     "activeTab",
-    "scripting"
+    "scripting",
+    "contextMenus"
   ],
   "commands": {
     "_execute_sidebar_action": {
@@ -50,13 +51,14 @@
   },  
   "background": {
     "scripts": [
-      "utils/browser-polyfill.js"
+      "utils/browser-polyfill.js",
+      "background.js"
     ]
   },
   "content_scripts": [
     {
       "matches": ["https://*/*"],
-      "js": ["utils/browser-polyfill.js", "content.js"],
+      "js": ["utils/browser-polyfill.js", "content-script.js"],
       "run_at" : "document_start"
     }
   ],
